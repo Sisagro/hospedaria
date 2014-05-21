@@ -22,6 +22,6 @@ echo $this->Html->link($this->Html->image("botoes/retornar.png", array("alt" => 
     jQuery(document).ready(function(){
         $("#dtnascimento").mask("99/99/9999");
         $("#cpf").mask("999.999.999-99");
-        $("#rg").mask("999999999-9");
+        $("#rg").mask("9999999999");
     });
 </script>

@@ -87,9 +87,6 @@ class Cliente extends AppModel {
            $this->data[$this->alias]['cpf'] = str_replace(".", "", $this->data[$this->alias]['cpf']);
            $this->data[$this->alias]['cpf'] = str_replace("-", "", $this->data[$this->alias]['cpf']);
        }
-       if (isset($this->data[$this->alias]['rg'])) {
-           $this->data[$this->alias]['rg'] = str_replace("-", "", $this->data[$this->alias]['rg']);
-       }
        return true;
    }
 
@@ -100,9 +97,6 @@ class Cliente extends AppModel {
            }
            if (!empty($value["Cliente"]["cpf"])) {
                $dados[$key]["Cliente"]["cpf"] = substr($value['Cliente']['cpf'],0,3) . "." . substr($value['Cliente']['cpf'],3,3) . "." . substr($value['Cliente']['cpf'],6,3) . "-" . substr($value['Cliente']['cpf'],9,2);
-           }
-           if (!empty($value["Cliente"]["rg"])) {
-               $dados[$key]["Cliente"]["rg"] = substr($value['Cliente']['rg'],0,9) . "-" . substr($value['Cliente']['rg'],9,1);
            }
        }
        return $dados;

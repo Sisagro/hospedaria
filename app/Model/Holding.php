@@ -85,7 +85,7 @@ class Holding extends AppModel {
         ),
         'Cliente' => array(
             'className' => 'Cliente',
-            'foreignKey' => 'empresa_id',
+            'foreignKey' => 'holding_id',
             'dependent' => false,
         ),
     );

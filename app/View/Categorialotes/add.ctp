@@ -97,11 +97,3 @@ $this->Js->get('#categoriaID')->event(
         
     });
 </script>
-
-
-
-<script> 
-
-</script> 
-
-

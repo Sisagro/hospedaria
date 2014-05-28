@@ -43,6 +43,7 @@ class ClientesController extends AppController {
             $this->redirect(array('action' => 'index'));
         }
         
+        $this->Cliente->recursive = 2;
         $dadosUser = $this->Session->read();
         $holding_id = $dadosUser['Auth']['User']['holding_id'];
         
@@ -63,6 +64,9 @@ class ClientesController extends AppController {
         
         $dadosUser = $this->Session->read();
         
+        $empresa_id = $dadosUser['empresa_id'];
+        $this->set(compact('empresa_id'));
+        
         $holding_id = $dadosUser['Auth']['User']['holding_id'];
         $this->set(compact('holding_id'));
         
@@ -72,12 +76,23 @@ class ClientesController extends AppController {
         $status = array('A' => 'ATIVO', 'I' => 'INATIVO');
         $this->set('status', $status);
         
+        $this->Cliente->Endereco->Cidade->Estado->recursive = 1;
+        $estados = $this->Cliente->Endereco->Cidade->Estado->find('list', array(
+            'fields' => array('id', 'nome'),
+            'conditions' => array('holding_id' => $dadosUser['Auth']['User']['holding_id'], 'pais_id' => 1),
+            'order' => array('nome' => 'asc')
+        ));
+        $this->set('estados', $estados);
+        
         if ($this->request->is('post')) {
             $this->Cliente->create();
-            if ($this->Cliente->save($this->request->data)) {
+            if ($this->Cliente->saveAssociated($this->request->data)) {
                 $this->Session->setFlash('Cliente adicionado com sucesso!', 'default', array('class' => 'mensagem_sucesso'));
                 $this->redirect(array('action' => 'index'));
             } else {
+                $errors = $this->Cliente->validationErrors;
+                debug($errors);
+                die();
                 $this->Session->setFlash('Registro não foi salvo. Por favor tente novamente.', 'default', array('class' => 'mensagem_erro'));
             }
         }
@@ -104,6 +119,7 @@ class ClientesController extends AppController {
             $this->Session->setFlash('Registro não encontrado.', 'default', array('class' => 'mensagem_erro'));
             $this->redirect(array('action' => 'index'));
         }
+        $this->set('cliente', $cliente);
         
         $sexos = array('M' => 'MASCULINO', 'F' => 'FEMININO');
         $this->set('sexos', $sexos);
@@ -111,11 +127,31 @@ class ClientesController extends AppController {
         $status = array('A' => 'ATIVO', 'I' => 'INATIVO');
         $this->set('status', $status);
         
+        if (!empty($cliente['Endereco'])) {
+            $this->Cliente->Endereco->Cidade->recursive = -1;
+            $cidade = $this->Cliente->Endereco->Cidade->findById($cliente['Endereco'][0]['cidade_id']);
+            $cidades = $this->Cliente->Endereco->Cidade->find('list', array(
+                'fields' => array('id', 'nome'),
+                'conditions' => array('estado_id' => $cidade['Cidade']['estado_id']),
+                'order' => array('nome' => 'asc')
+            ));
+            $this->set('cidades', $cidades);
+        }
+        
         if ($this->request->is('post') || $this->request->is('put')) {
             $this->Cliente->id = $id;
-            if ($this->Cliente->save($this->request->data)) {
-                $this->Session->setFlash('Cliente alterado com sucesso.', 'default', array('class' => 'mensagem_sucesso'));
-                $this->redirect(array('action' => 'index'));
+            if ($this->Cliente->save($this->request->data['Cliente'])) {
+                if (!empty($this->request->data['Endereco'][0])) {
+                    $this->Cliente->Endereco->id = $this->request->data['Endereco'][0]['id'];
+                    if ($this->Cliente->Endereco->save($this->request->data['Endereco'][0])) {
+                        $this->Session->setFlash('Cliente alterado com sucesso.', 'default', array('class' => 'mensagem_sucesso'));
+                        $this->redirect(array('action' => 'index'));
+                    }
+                } else {
+                    $this->Session->setFlash('Cliente alterado com sucesso.', 'default', array('class' => 'mensagem_sucesso'));
+                    $this->redirect(array('action' => 'index'));
+                }
+                
             } else {
                 $this->Session->setFlash('Registro não foi alterado. Por favor tente novamente.', 'default', array('class' => 'mensagem_erro'));
             }

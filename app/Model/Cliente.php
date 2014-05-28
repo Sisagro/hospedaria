@@ -75,7 +75,19 @@ class Cliente extends AppModel {
     * hasMany associations
     */
    public $hasMany = array(
-       
+       'Endereco' => array(
+            'className' => 'Endereco',
+            'foreignKey' => 'cliente_id',
+            'dependent' => true,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => true,
+            'finderQuery' => '',
+            'counterQuery' => ''
+        ),
    );
 
 

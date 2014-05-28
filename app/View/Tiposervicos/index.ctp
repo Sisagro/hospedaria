@@ -7,22 +7,22 @@ echo $this->Html->link($this->Html->image("botoes/add.png", array("alt" => "Adic
 <table cellpadding="0" cellspacing="0">
     <tr>
         <th><?php echo $this->Paginator->sort('id'); ?></th>
-        <th><?php echo $this->Paginator->sort('Paise.nome', 'País'); ?></th>
-        <th><?php echo $this->Paginator->sort('nome', 'Nome'); ?></th>
+        <th><?php echo $this->Paginator->sort('descricao', 'Descrição'); ?></th>
+        <th><?php echo $this->Paginator->sort('valor', 'Valor'); ?></th>
         <th class="actions"><?php echo __('Ações'); ?></th>
     </tr>
-    <?php foreach ($estados as $item): ?>
+    <?php foreach ($tiposervicos as $item): ?>
         <tr>
-            <td><?php echo h($item['Estado']['id']); ?>&nbsp;</td>
-            <td><?php echo h($item['Paise']['nome']); ?>&nbsp;</td>
-            <td><?php echo h($item['Estado']['nome']); ?>&nbsp;</td>
+            <td><?php echo h($item['Tiposervico']['id']); ?>&nbsp;</td>
+            <td><?php echo h($item['Tiposervico']['descricao']); ?>&nbsp;</td>
+            <td><?php echo h($item['Tiposervico']['valor']); ?>&nbsp;</td>
             <td>
                 <div id="botoes">
                     <?php
-                    echo $this->Html->link($this->Html->image("botoes/view.png", array("alt" => "Visualizar", "title" => "Visualizar")), array('action' => 'view', $item['Estado']['id']), array('escape' => false));
-                    echo $this->Html->link($this->Html->image("botoes/editar.gif", array("alt" => "Editar", "title" => "Editar")), array('action' => 'edit', $item['Estado']['id']), array('escape' => false));
+                    echo $this->Html->link($this->Html->image("botoes/view.png", array("alt" => "Visualizar", "title" => "Visualizar")), array('action' => 'view', $item['Tiposervico']['id']), array('escape' => false));
+                    echo $this->Html->link($this->Html->image("botoes/editar.gif", array("alt" => "Editar", "title" => "Editar")), array('action' => 'edit', $item['Tiposervico']['id']), array('escape' => false));
                     echo $this->Form->postLink($this->Html->image('botoes/excluir.gif', array('alt' => 'Exluir', 'title' => 'Exluir')),
-                                               array('action' => 'delete', $item['Estado']['id']), array('escape' => false),
+                                               array('action' => 'delete', $item['Tiposervico']['id']), array('escape' => false),
                                                __('Você realmete deseja apagar esse item?')
                                               );
                     

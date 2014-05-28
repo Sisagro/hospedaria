@@ -33,7 +33,7 @@ class CidadesController extends AppController {
         $this->Cidade->recursive = 0;
         $this->Paginator->settings = array(
             'conditions' => array('Estado.pais_id' => $paises),
-            'order' => array('nome' => 'asc')
+            'order' => array('Estado.nome' => 'asc', 'Cidade.nome' => 'asc')
         );
         $this->set('cidades', $this->Paginator->paginate('Cidade'));
     }
@@ -154,7 +154,7 @@ class CidadesController extends AppController {
         if (array_key_exists("estado_id", $this->request->data[$chave])) {
             $catID = $this->request->data[$chave]['estado_id'];
         }
-        $cidades = $this->Cidade->find('list' , array('order' => 'nome ASC','fields' => array('Cidade.id', 'Cidade.nome'),'conditions' => array('Cidade.pais_id' => $catID)));
+        $cidades = $this->Cidade->find('list' , array('order' => 'nome ASC','fields' => array('Cidade.id', 'Cidade.nome'),'conditions' => array('Cidade.estado_id' => $catID)));
         $this->set('cidades', $cidades);
     }
     

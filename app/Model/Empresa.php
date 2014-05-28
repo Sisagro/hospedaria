@@ -113,6 +113,11 @@ class Empresa extends AppModel {
             'foreignKey' => 'empresa_id',
             'dependent' => false,
         ),
+        'Tiposervico' => array(
+            'className' => 'Tiposervico',
+            'foreignKey' => 'empresa_id',
+            'dependent' => false,
+        ),
     );
 
 }

@@ -7,15 +7,15 @@ echo $this->Html->link($this->Html->image("botoes/add.png", array("alt" => "Adic
 <table cellpadding="0" cellspacing="0">
     <tr>
         <th><?php echo $this->Paginator->sort('id'); ?></th>
-        <th><?php echo $this->Paginator->sort('nome', 'Nome'); ?></th>
         <th><?php echo $this->Paginator->sort('Estado.nome', 'Estado'); ?></th>
+        <th><?php echo $this->Paginator->sort('nome', 'Nome'); ?></th>
         <th class="actions"><?php echo __('Ações'); ?></th>
     </tr>
     <?php foreach ($cidades as $item): ?>
         <tr>
             <td><?php echo h($item['Cidade']['id']); ?>&nbsp;</td>
-            <td><?php echo h($item['Cidade']['nome']); ?>&nbsp;</td>
             <td><?php echo h($item['Estado']['nome']); ?>&nbsp;</td>
+            <td><?php echo h($item['Cidade']['nome']); ?>&nbsp;</td>
             <td>
                 <div id="botoes">
                     <?php

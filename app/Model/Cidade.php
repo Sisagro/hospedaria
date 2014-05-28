@@ -48,7 +48,26 @@ class Cidade extends AppModel {
             'conditions' => '',
             'fields' => '',
             'order' => ''
-        )
+        ),
+    );
+    
+    /**
+     * hasMany associations
+     */
+    public $hasMany = array(
+        'Endereco' => array(
+            'className' => 'Endereco',
+            'foreignKey' => 'cidade_id',
+            'dependent' => true,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
+        ),
     );
        
 }

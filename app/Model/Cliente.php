@@ -88,6 +88,19 @@ class Cliente extends AppModel {
             'finderQuery' => '',
             'counterQuery' => ''
         ),
+       'Animai' => array(
+            'className' => 'Animai',
+            'foreignKey' => 'cliente_id',
+            'dependent' => true,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => true,
+            'finderQuery' => '',
+            'counterQuery' => ''
+        ),
    );
 
 

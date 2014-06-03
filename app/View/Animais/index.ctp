@@ -9,6 +9,8 @@ if ($validaPlano) {
 <div id="filtroGrade">
     <?php
     echo $this->Search->create();
+    echo $this->Search->input('filter7', array('class' => 'select-box', 'empty' => '-- Cliente --'));
+    echo $this->Html->image("separador.png");
     echo $this->Search->input('filter1', array('class' => 'select-box', 'empty' => '-- Espécie --'));
     echo $this->Html->image("separador.png");
     echo $this->Search->input('filter2', array('class' => 'select-box', 'empty' => '-- Sexo --'));
@@ -35,10 +37,11 @@ if ($validaPlano) {
 <table cellpadding="0" cellspacing="0">
     <tr>
         <th><?php echo $this->Paginator->sort('id'); ?></th>
+        <th><?php echo $this->Paginator->sort('Cliente.nome', 'Cliente'); ?></th>
         <th><?php echo $this->Paginator->sort('Especy.descricao', 'Espécie'); ?></th>
         <th><?php echo $this->Paginator->sort('Categoria.descricao', 'Categoria'); ?></th>
-        <th><?php echo $this->Paginator->sort('brinco', 'Brinco'); ?></th>
-        <th><?php echo $this->Paginator->sort('tatuagem', 'Tatuagem'); ?></th>
+        <th><?php echo $this->Paginator->sort('dtentrada', 'Entrada'); ?></th>
+        <th><?php echo $this->Paginator->sort('valor', 'Valor mensal'); ?></th>
         <th><?php echo $this->Paginator->sort('hbbsbb', 'HBB/SBB/FBB'); ?></th>
         <th><?php echo $this->Paginator->sort('ativo', 'Ativo'); ?></th>
         <th class="actions"><?php echo __('Ações'); ?></th>
@@ -46,11 +49,11 @@ if ($validaPlano) {
     <?php foreach ($animais as $item): ?>
         <tr>
             <td><?php echo h($item['Animai']['id']); ?>&nbsp;</td>
+            <td><?php echo h($item['Cliente']['nome']); ?>&nbsp;</td>
             <td><?php echo h($item['Especy']['descricao']); ?>&nbsp;</td>
             <td><?php echo h($item['Categoria']['descricao']); ?>&nbsp;</td>
-            
-            <td><?php echo h($item['Animai']['brinco']); ?>&nbsp;</td>
-            <td><?php echo h($item['Animai']['tatuagem']); ?>&nbsp;</td>
+            <td><?php echo h($item['Animai']['dtentrada']); ?>&nbsp;</td>
+            <td><?php echo h($item['Animai']['valor']); ?>&nbsp;</td>
             <td><?php echo h($item['Animai']['hbbsbb']); ?>&nbsp;</td>
             <td><?php if ($item['Animai']['ativo'] == 'A') { echo h('SIM'); } else { echo h('NÃO'); } ?>&nbsp;</td>
             <td>
@@ -82,7 +85,7 @@ if ($validaPlano) {
 
 <script type="text/javascript">
     jQuery(document).ready(function(){
-        document.getElementById('filterFilter1').focus();
+        document.getElementById('filterFilter7').focus();
         
         $("#filterFilter1").change( function(){
             var select = jQuery('#filterFilter2');
@@ -99,7 +102,7 @@ if ($validaPlano) {
                         $("#filterFilter3").html(data);
                     },
                     type:"post",
-                    url:"\/pecuaria/Categorias\/buscaCategoriasAnimais\/filter\/filter2\/"  + $("#filterFilter1 option:selected").val()
+                    url:"\/hospedaria/Categorias\/buscaCategoriasAnimais\/filter\/filter2\/"  + $("#filterFilter1 option:selected").val()
             });
         });
         

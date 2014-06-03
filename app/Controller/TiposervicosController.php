@@ -67,6 +67,11 @@ class TiposervicosController extends AppController {
         $this->set(compact('empresa_id'));
         
         if ($this->request->is('post')) {
+            
+            if (empty($this->request->data['Tiposervico']['valor'])) {
+                $this->request->data['Tiposervico']['valor'] = 0;
+            }
+            
             $this->Tiposervico->create();
             if ($this->Tiposervico->save($this->request->data)) {
                 $this->Session->setFlash('Tipo de serviço adicionado com sucesso!', 'default', array('class' => 'mensagem_sucesso'));
@@ -99,6 +104,11 @@ class TiposervicosController extends AppController {
         }
         
         if ($this->request->is('post') || $this->request->is('put')) {
+            
+            if (empty($this->request->data['Tiposervico']['valor'])) {
+                $this->request->data['Tiposervico']['valor'] = 0;
+            }
+            
             $this->Tiposervico->id = $id;
             if ($this->Tiposervico->save($this->request->data)) {
                 $this->Session->setFlash('Tipo de serviço alterado com sucesso.', 'default', array('class' => 'mensagem_sucesso'));

@@ -6,6 +6,7 @@ echo $this->Html->link($this->Html->image("botoes/retornar.png", array("alt" => 
 <?php echo $this->Form->create('Animai'); ?>
 <fieldset>
     <?php
+    echo $this->Form->input('cliente_id', array ('id' => 'clienteID', 'type' => 'select','options' => $clientes, 'label' => 'Cliente', 'empty' => '-- Selecione o cliente --'));
     echo $this->Form->input('grausangue_id', array ('id' => 'grausangueID', 'type' => 'select','options' => $grausangues, 'label' => 'Grau de sangue', 'empty' => '-- Selecione o grau de sangue --'));
     ?>
     <div class="fomr_checkbox_animais">
@@ -44,12 +45,10 @@ echo $this->Html->link($this->Html->image("botoes/retornar.png", array("alt" => 
     </div>
     
     <?php
-    echo $this->Form->input('dtnasc', array('id' => 'dtnasc', 'class' => 'data', 'type' => 'text', 'label' => 'Data de nascimento'));
-    echo $this->Form->input('dtcomprado', array('id' => 'dtcomprado', 'class' => 'data', 'type' => 'text', 'label' => 'Data de compra'));
+    echo $this->Form->input('dtentrada', array('id' => 'dtentrada', 'class' => 'data', 'type' => 'text', 'label' => 'Data de entrada'));
     echo $this->Form->input('caracteristica', array ('id' => 'caracteristica', 'type' => 'textarea', 'label' => 'Características', 'escape' => false));
-    //echo $this->Form->input('causabaixa_id', array ('id' => 'causabaixaID', 'type' => 'select','options' => $causabaixas, 'label' => 'Causa de baixa', 'empty' => '-- Selecione a causa de baixa --'));
-    //echo $this->Form->input('ativo', array ('id' => 'ativo', 'type' => 'select','options' => $status, 'label' => 'Ativo'));
-    echo $this->Form->input('empresa_id', array('type' => 'hidden', 'value' => $empresa_id));
+    echo $this->Form->input('Tiposervico.Tiposervico',array('title' => 'CTRL + Click (para selecionar mais de um)', 'label'=>'Escolha os tipos de serviços', 'type'=>'select', 'multiple'=>true));
+    echo $this->Form->input('valor', array('id' => 'valor', 'type' => 'text', 'label' => 'Valor mensal do animal'));
     ?>
 </fieldset>
 <?php echo $this->Form->end(__('Editar')); ?>
@@ -102,11 +101,11 @@ echo $this->Html->link($this->Html->image("botoes/retornar.png", array("alt" => 
     
     jQuery(document).ready(function(){
         
-        $("#dtnasc").mask("99/99/9999");
-        $("#dtcomprado").mask("99/99/9999");
+        $("#dtentrada").mask("99/99/9999");
+        $("#valor").maskMoney({showSymbol:false, decimal:",", thousands:"", precision:2});
         $("#coranimal").hide();
         
-        document.getElementById('grausangueID').focus();
+        document.getElementById('clienteID').focus();
         
         $(".data").datepicker({
             dateFormat: 'dd/mm/yy',

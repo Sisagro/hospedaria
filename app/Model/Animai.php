@@ -38,7 +38,7 @@ class Animai extends AppModel {
      * @var array
      */
     public $validate = array(
-        'empresa_id' => array(
+        'cliente_id' => array(
             'numeric' => array(
                 'rule' => array('numeric'),
             ),
@@ -171,18 +171,21 @@ class Animai extends AppModel {
                 'allowEmpty' => true
             ),
         ),
-        'dtnasc' => array(
+        'dtentrada' => array(
+            'notEmpty' => array(
+                'rule' => 'notEmpty',
+                'message' => 'Este campo não pode ser vazio.',
+                'last' => false
+            ),
             'tamanho' => array(
                 'rule' => array('maxLength', 10),
                 'message' => 'Este campo não pode ter mais que 10 caracteres.',
-                'allowEmpty' => true
             ),
         ),
-        'dtcomprado' => array(
-            'tamanho' => array(
-                'rule' => array('maxLength', 10),
-                'message' => 'Este campo não pode ter mais que 10 caracteres.',
-                'allowEmpty' => true
+        'valor' => array(
+            'notempty' => array(
+                'rule' => array('notempty'),
+                'message' => 'Este campo é obrigatório.',
             ),
         ),
     );
@@ -194,9 +197,9 @@ class Animai extends AppModel {
      * @var array
      */
     public $belongsTo = array(
-        'Empresa' => array(
-            'className' => 'Empresa',
-            'foreignKey' => 'empresa_id',
+        'Cliente' => array(
+            'className' => 'Cliente',
+            'foreignKey' => 'cliente_id',
             'conditions' => '',
             'fields' => '',
             'order' => ''
@@ -251,26 +254,42 @@ class Animai extends AppModel {
     
     
     /**
+     * hasAndBelongsToMany associations
+     */
+    public $hasAndBelongsToMany = array(
+        'Tiposervico' =>
+            array(
+                'className'             => 'Tiposervico',
+                'joinTable'             => 'animaltiposervicos',
+                'foreignKey'            => 'animai_id',
+                'associationForeignKey' => 'tiposervico_id',
+                'order'                 => 'Tiposervico.descricao',
+            )
+    );
+    
+    
+    /**
      * Validações
      */
     
     public function beforeSave($options = array()) {
-        if (isset($this->data[$this->alias]['dtnasc'])) {
-            $this->data[$this->alias]['dtnasc'] = $this->formataData($this->data[$this->alias]['dtnasc'], 'EN', 'N');
+        if (isset($this->data[$this->alias]['dtentrada'])) {
+            $this->data[$this->alias]['dtentrada'] = $this->formataData($this->data[$this->alias]['dtentrada'], 'EN', 'N');
         }
-        if (isset($this->data[$this->alias]['dtcomprado'])) {
-            $this->data[$this->alias]['dtcomprado'] = $this->formataData($this->data[$this->alias]['dtcomprado'], 'EN', 'N');
+        if (isset($this->data[$this->alias]['valor'])) {
+            $this->data[$this->alias]['valor'] = str_replace(".", "", $this->data[$this->alias]['valor']);
+            $this->data[$this->alias]['valor'] = str_replace(",", ".", $this->data[$this->alias]['valor']);
         }
         return true;
     }
 
     public function afterFind($dados, $primary = false) {
         foreach ($dados as $key => $value) {
-            if (!empty($value["Animai"]["dtnasc"])) {
-                $dados[$key]["Animai"]["dtnasc"] = $this->formataData($value["Animai"]["dtnasc"], 'PT', 'N');
+            if (!empty($value["Animai"]["dtentrada"])) {
+                $dados[$key]["Animai"]["dtentrada"] = $this->formataData($value["Animai"]["dtentrada"], 'PT', 'N');
             }
-            if (!empty($value["Animai"]["dtcomprado"])) {
-                $dados[$key]["Animai"]["dtcomprado"] = $this->formataData($value["Animai"]["dtcomprado"], 'PT', 'N');
+            if (!empty($value["Animai"]["valor"])) {
+                $dados[$key]["Animai"]["valor"] = str_replace(".", ",", $value["Animai"]["valor"]);
             }
         }
         return $dados;

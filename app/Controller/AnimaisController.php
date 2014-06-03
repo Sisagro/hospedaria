@@ -40,11 +40,6 @@ class AnimaisController extends AppController {
         
         if ($this->request->is('post')) {
             
-            
-            
-                
-            
-            
             if (empty($this->request->data['Relatorio']['especie_id'])) {
                 
                 $especie = 0;
@@ -55,9 +50,6 @@ class AnimaisController extends AppController {
                     )
                 ));
                 
-//                debug($animais);
-//                die();
-                                                
             } else {
                 
                 $especie = $this->request->data['Relatorio']['especie_id'];
@@ -73,9 +65,6 @@ class AnimaisController extends AppController {
                         )
                     ));
                     
-//                    debug($especie);
-//                    die();
-                    
                 } else {
                     
                     $categoria = $this->request->data['Relatorio']['categoria_id'];
@@ -87,9 +76,6 @@ class AnimaisController extends AppController {
                             'Animai.categoria_id' => $categoria,
                         )
                     ));
-                    
-//                    debug($categoria);
-//                    die();
                     
                 }
                 
@@ -130,6 +116,10 @@ class AnimaisController extends AppController {
         $this->Animai->Especy->recursive = -1;
         $especies = $this->Animai->Especy->find('list', array('order' => 'descricao ASC', 'fields' => array('id', 'descricao'), 'conditions' => array('holding_id' => $dadosUser['Auth']['User']['holding_id'])));
         
+        // busca clientes cadastrados
+        $this->Animai->Cliente->recursive = -1;
+        $clientes = $this->Animai->Cliente->find('list', array('order' => 'nome ASC', 'fields' => array('id', 'nome'), 'conditions' => array('holding_id' => $dadosUser['Auth']['User']['holding_id'], 'ativo' => 'A')));
+        
         // Sexos
         $sexos = array('M' => 'MACHO', 'F' => 'FÊMEA');
         
@@ -138,6 +128,11 @@ class AnimaisController extends AppController {
         
         $this->Filter->addFilters(
             array(
+                'filter7' => array(
+                    'Animai.cliente_id' => array(
+                        'select' => $clientes
+                    ),
+                ),
                 'filter1' => array(
                     'Animai.especie_id' => array(
                         'select' => $especies
@@ -183,20 +178,12 @@ class AnimaisController extends AppController {
             )
         );
         
-        $this->Filter->setPaginate('order', array('Especy.descricao' => 'asc'));
+        $this->Filter->setPaginate('order', array('Cliente.nome' => 'asc'));
         
-        $this->Filter->setPaginate('conditions', array($this->Filter->getConditions(), 'Animai.empresa_id' => $dadosUser['empresa_id']));
+        //$this->Filter->setPaginate('conditions', array($this->Filter->getConditions(), 'Animai.empresa_id' => $dadosUser['empresa_id']));
+        $this->Filter->setPaginate('conditions', array($this->Filter->getConditions()));
         
         $this->set('animais', $this->paginate());
-        
-        
-//        $dadosUser = $this->Session->read();
-//        $this->Animai->recursive = 0;
-//        $this->Paginator->settings = array(
-//            'conditions' => array('empresa_id' => $dadosUser['empresa_id']),
-//            'order' => array('Especy.descricao' => 'asc', 'Categoria.descricao' => 'asc', 'brinco' => 'asc', 'tatuagem' => 'asc')
-//        );
-//        $this->set('animais', $this->Paginator->paginate('Animai'));
         
         $this->set('validaPlano', $this->validaPlano($dadosUser['Auth']['User']['holding_id'], $dadosUser['Auth']['User']['Holding']['plano_id']));
 
@@ -214,10 +201,9 @@ class AnimaisController extends AppController {
         }
         
         $dadosUser = $this->Session->read();
-        $empresa_id = $dadosUser['empresa_id'];
-        
         $animal = $this->Animai->read(null, $id);
-        if ($animal['Animai']['empresa_id'] != $empresa_id) {
+        
+        if ($animal['Cliente']['holding_id'] != $dadosUser['Auth']['User']['holding_id']) {
             $this->Session->setFlash('Registro não encontrado.', 'default', array('class' => 'mensagem_erro'));
             $this->redirect(array('action' => 'index'));
         }
@@ -238,8 +224,10 @@ class AnimaisController extends AppController {
             $this->redirect(array('action' => 'index'));
         }
         
-        $empresa_id = $dadosUser['empresa_id'];
-        $this->set(compact('empresa_id'));
+        // busca clientes cadastrados
+        $this->Animai->Cliente->recursive = -1;
+        $clientes = $this->Animai->Cliente->find('list', array('order' => 'nome ASC', 'fields' => array('id', 'nome'), 'conditions' => array('holding_id' => $dadosUser['Auth']['User']['holding_id'], 'ativo' => 'A')));
+        $this->set('clientes', $clientes);
         
         $sexos = array('M' => 'MACHO', 'F' => 'FÊMEA');
         $this->set('sexos', $sexos);
@@ -268,6 +256,9 @@ class AnimaisController extends AppController {
         ));
         $this->set(compact('causabaixas'));
         
+        $tiposervicos = $this->Animai->Tiposervico->find('list',array('fields'=>array('id','descricao'),'order'=>array('Tiposervico.descricao' => 'asc')));
+        $this->set(compact('tiposervicos'));
+        
         if ($this->request->is('post')) {
             $this->Animai->create();
             if ($this->Animai->save($this->request->data)) {
@@ -292,14 +283,17 @@ class AnimaisController extends AppController {
         }
         
         $dadosUser = $this->Session->read();
-        $empresa_id = $dadosUser['empresa_id'];
-        $this->set('empresa_id', $empresa_id);
         
         $animal = $this->Animai->read(null, $id);
-        if ($animal['Animai']['empresa_id'] != $empresa_id) {
+        if ($animal['Cliente']['holding_id'] != $dadosUser['Auth']['User']['holding_id']) {
             $this->Session->setFlash('Registro não encontrado.', 'default', array('class' => 'mensagem_erro'));
             $this->redirect(array('action' => 'index'));
         }
+        
+        // busca clientes cadastrados
+        $this->Animai->Cliente->recursive = -1;
+        $clientes = $this->Animai->Cliente->find('list', array('order' => 'nome ASC', 'fields' => array('id', 'nome'), 'conditions' => array('holding_id' => $dadosUser['Auth']['User']['holding_id'], 'ativo' => 'A')));
+        $this->set('clientes', $clientes);
         
         $sexos = array('M' => 'MACHO', 'F' => 'FÊMEA');
         $this->set('sexos', $sexos);
@@ -327,6 +321,9 @@ class AnimaisController extends AppController {
             'order' => array('descricao' => 'asc')
         ));
         $this->set(compact('causabaixas'));
+        
+        $tiposervicos = $this->Animai->Tiposervico->find('list',array('fields'=>array('id','descricao'),'order'=>array('Tiposervico.descricao' => 'asc')));
+        $this->set(compact('tiposervicos'));
         
         $this->set('coranimal', $animal['Animai']['cor']);
         
@@ -417,11 +414,11 @@ class AnimaisController extends AppController {
         
         $this->Animai->recursive = 1;
         $totalAnimais = $this->Animai->find('count', array(
-            'conditions' => array('Empresa.holding_id' => $holding_id)
+            'conditions' => array('Cliente.holding_id' => $holding_id)
         ));
         
-        $this->Animai->Empresa->Holding->Plano->recursive = 0;
-        $plano = $this->Animai->Empresa->Holding->Plano->find('first', array('conditions' => array('id' => $plano_id)));
+        $this->Animai->Cliente->Holding->Plano->recursive = 0;
+        $plano = $this->Animai->Cliente->Holding->Plano->find('first', array('conditions' => array('id' => $plano_id)));
         
         if(empty($plano['Plano']['animal'])) {
             return true;

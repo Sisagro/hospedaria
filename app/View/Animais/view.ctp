@@ -5,6 +5,9 @@ echo $this->Form->postLink($this->Html->image('botoes/excluir.png', array('alt' 
 <br>
 <br>
 <p>
+<strong> Cliente: </strong>
+<?php echo $animal['Cliente']['nome'] . " " . $animal['Cliente']['sobrenome']; ?>
+<br>
 <strong> Espécie: </strong>
 <?php echo $animal['Especy']['descricao']; ?>
 <br>
@@ -20,11 +23,8 @@ echo $this->Form->postLink($this->Html->image('botoes/excluir.png', array('alt' 
 <strong> Grau de sangue: </strong>
 <?php echo $animal['Grausangue']['descricao']; ?>
 <br>
-<strong> Data de nascimento: </strong>
-<?php echo $animal['Animai']['dtnasc']; ?>
-<br>
-<strong> Data de compra: </strong>
-<?php echo $animal['Animai']['dtcomprado']; ?>
+<strong> Data de entrada: </strong>
+<?php echo $animal['Animai']['dtentrada']; ?>
 <br>
 <strong> Características: </strong>
 <?php echo $animal['Animai']['caracteristica']; ?>
@@ -61,4 +61,16 @@ if (!empty($animal['Animai']['cor'])) {
     <?php
 }
 ?>
+<br>
+<strong> Serviços: </strong>
+<br>
+<?php foreach ($animal['Tiposervico'] as $tiposervico): ?>
+
+    &nbsp;&nbsp;&nbsp;&nbsp; <i><?php echo $tiposervico['descricao']; ?></i> <br>
+
+<?php endforeach; ?>
+<br>
+<strong> Valor mensal: </strong>
+<?php echo $animal['Animai']['valor']; ?>
+<br>
 </p>

@@ -8,7 +8,7 @@ echo $this->Form->postLink($this->Html->image('botoes/excluir.png', array('alt' 
 <strong> Descrição: </strong>
 <?php echo $tiposervico['Tiposervico']['descricao']; ?>
 <br>
-<strong> Data de criação: </strong>
+<strong> Valor do serviço: </strong>
 <?php echo $tiposervico['Tiposervico']['valor']; ?>
 <br>
 </p>

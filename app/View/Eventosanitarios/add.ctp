@@ -120,7 +120,7 @@ $this->Js->get('#grupomedID')->event(
                         $("#categorialoteID").html(data);
                     },
                     type:"post",
-                    url:"\/pecuaria/categorialotes\/buscaId\/Eventosanitario\/" + $("#loteID option:selected").val()
+                    url:"\/hospedaria/categorialotes\/buscaId\/Eventosanitario\/" + $("#loteID option:selected").val()
             });
         });
         
@@ -132,7 +132,7 @@ $this->Js->get('#grupomedID')->event(
                         $("#animalID").html(data);
                     },
                     type:"post",
-                    url:"\/pecuaria/Categorialotes\/buscaAnimaisLote\/Eventosanitario\/" + $("#loteID option:selected").val()
+                    url:"\/hospedaria/Categorialotes\/buscaAnimaisLote\/Eventosanitario\/" + $("#loteID option:selected").val()
             });
         });
         

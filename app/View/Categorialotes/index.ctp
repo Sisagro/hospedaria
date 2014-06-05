@@ -85,7 +85,7 @@ echo $this->Html->link($this->Html->image("botoes/add.png", array("alt" => "Adic
                         $("#filterFilter3").html(data);
                     },
                     type:"post",
-                    url:"\/pecuaria/Categorias\/buscaCategoriasAnimais\/filter\/filter2\/"  + $("#filterFilter1 option:selected").val()
+                    url:"\/hospedaria/Categorias\/buscaCategoriasAnimais\/filter\/filter2\/"  + $("#filterFilter1 option:selected").val()
             });
         });
         

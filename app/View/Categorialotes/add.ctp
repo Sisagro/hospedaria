@@ -91,7 +91,7 @@ $this->Js->get('#categoriaID')->event(
                         $("#categoriaID").html(data);
                     }, 
                     type:"post", 
-                    url:"\/pecuaria/categorias\/buscaCategorias\/Categorialote\/" + $("#loteID option:selected").val()
+                    url:"\/hospedaria/categorias\/buscaCategorias\/Categorialote\/" + $("#loteID option:selected").val()
             });
         });
         

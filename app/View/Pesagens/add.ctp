@@ -102,7 +102,7 @@ $this->Js->get('#loteID')->event(
                         $("#categorialoteID").html(data);
                     },
                     type:"post",
-                    url:"\/pecuaria/categorialotes\/buscaId\/Pesagen\/" + $("#loteID option:selected").val()
+                    url:"\/hospedaria/categorialotes\/buscaId\/Pesagen\/" + $("#loteID option:selected").val()
             });
         });
         
@@ -114,7 +114,7 @@ $this->Js->get('#loteID')->event(
                         $("#animalID").html(data);
                     },
                     type:"post",
-                    url:"\/pecuaria/Categorialotes\/buscaAnimaisLote\/Pesagen\/" + $("#loteID option:selected").val()
+                    url:"\/hospedaria/Categorialotes\/buscaAnimaisLote\/Pesagen\/" + $("#loteID option:selected").val()
             });
         });
         

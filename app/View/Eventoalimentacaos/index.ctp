@@ -116,7 +116,7 @@ echo $this->Search->create();
                         $("#filterFilter1").html(data);
                     },
                     type:"post",
-                    url:"\/pecuaria/Categorias\/buscaCategoriasAnimais\/filter\/sexo\/"  + $("#especieID option:selected").val()
+                    url:"\/hospedaria/Categorias\/buscaCategoriasAnimais\/filter\/sexo\/"  + $("#especieID option:selected").val()
             });
         });
         

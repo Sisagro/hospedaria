@@ -40,7 +40,7 @@
                     <?php
                 }
                 ?>
-                <li><a href="#">Cadastros</a>
+                <li><a href="#">Campo</a>
                     <ul>
                 <?php
                 $menu_3++;

@@ -17,11 +17,11 @@ if ($validaPlano) {
     echo $this->Html->image("separador.png");
     echo $this->Search->input('filter3', array('class' => 'select-box', 'empty' => '-- Categoria --'));
     echo $this->Html->image("separador.png");
+    echo $this->Search->input('filter6', array('class' => 'input-box', 'placeholder' => 'Nome'));
+    echo $this->Html->image("separador.png");
     echo $this->Search->input('filter4', array('class' => 'input-box', 'placeholder' => 'Brinco'));
     echo $this->Html->image("separador.png");
     echo $this->Search->input('filter5', array('class' => 'input-box', 'placeholder' => 'Tatuagem'));
-    echo $this->Html->image("separador.png");
-    echo $this->Search->input('filter6', array('class' => 'input-box', 'placeholder' => 'SBB/HBB/FBB'));
     echo $this->Html->image("separador.png");
     ?>
     <input  type="submit" value="Filtrar" class="botaoFiltro"/>
@@ -38,11 +38,11 @@ if ($validaPlano) {
     <tr>
         <th><?php echo $this->Paginator->sort('id'); ?></th>
         <th><?php echo $this->Paginator->sort('Cliente.nome', 'Cliente'); ?></th>
+        <th><?php echo $this->Paginator->sort('Animai.nome', 'Nome'); ?></th>
         <th><?php echo $this->Paginator->sort('Especy.descricao', 'Espécie'); ?></th>
         <th><?php echo $this->Paginator->sort('Categoria.descricao', 'Categoria'); ?></th>
         <th><?php echo $this->Paginator->sort('dtentrada', 'Entrada'); ?></th>
         <th><?php echo $this->Paginator->sort('valor', 'Valor mensal'); ?></th>
-        <th><?php echo $this->Paginator->sort('hbbsbb', 'HBB/SBB/FBB'); ?></th>
         <th><?php echo $this->Paginator->sort('ativo', 'Ativo'); ?></th>
         <th class="actions"><?php echo __('Ações'); ?></th>
     </tr>
@@ -50,11 +50,11 @@ if ($validaPlano) {
         <tr>
             <td><?php echo h($item['Animai']['id']); ?>&nbsp;</td>
             <td><?php echo h($item['Cliente']['nome']); ?>&nbsp;</td>
+            <td><?php echo h($item['Animai']['nome']); ?>&nbsp;</td>
             <td><?php echo h($item['Especy']['descricao']); ?>&nbsp;</td>
             <td><?php echo h($item['Categoria']['descricao']); ?>&nbsp;</td>
             <td><?php echo h($item['Animai']['dtentrada']); ?>&nbsp;</td>
             <td><?php echo h($item['Animai']['valor']); ?>&nbsp;</td>
-            <td><?php echo h($item['Animai']['hbbsbb']); ?>&nbsp;</td>
             <td><?php if ($item['Animai']['ativo'] == 'A') { echo h('SIM'); } else { echo h('NÃO'); } ?>&nbsp;</td>
             <td>
                 <div id="botoes">

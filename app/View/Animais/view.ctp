@@ -35,6 +35,9 @@ echo $this->Form->postLink($this->Html->image('botoes/excluir.png', array('alt' 
 <strong> Ativo: </strong>
 <?php if($animal['Animai']['ativo'] == "A") { echo "SIM"; } else { echo "NÃO"; } ; ?>
 <br>
+<strong> Nome: </strong>
+<?php echo $animal['Animai']['nome']; ?>
+<br>
 <strong> Brinco: </strong>
 <?php echo $animal['Animai']['brinco']; ?>
 <br>

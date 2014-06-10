@@ -12,24 +12,52 @@ class Animai extends AppModel {
      * Virtual fields
      */
     public $virtualFields = array(
-        "descricao" => "IF (Animai.brinco = '' OR Animai.brinco IS NULL, 
+        "descricao" => "IF (Animai.nome = '' OR Animai.nome IS NULL, 
+                            IF (Animai.brinco = '' OR Animai.brinco IS NULL, 
                                 IF(Animai.tatuagem = '' OR Animai.tatuagem IS NULL, 
-                                        IF(Animai.hbbsbb = '' OR Animai.hbbsbb IS NULL, 
-                                                'Animal sem identificação', 
-                                                CONCAT('<b>H:</b> ' , Animai.hbbsbb)), 
-                                        IF(Animai.hbbsbb = '' OR Animai.hbbsbb IS NULL, 
-                                                CONCAT('<b>T:</b> ' , Animai.tatuagem), 
-                                                CONCAT('<b>T:</b> ' , Animai.tatuagem, ' <b>H:</b> ', Animai.hbbsbb))
-                                        ), 
+                                    IF(Animai.hbbsbb = '' OR Animai.hbbsbb IS NULL, 
+                                        'Animal sem identificação', 
+                                        CONCAT('<b>H:</b> ' , Animai.hbbsbb)
+                                    ), 
+                                    IF(Animai.hbbsbb = '' OR Animai.hbbsbb IS NULL, 
+                                        CONCAT('<b>T:</b> ' , Animai.tatuagem), 
+                                        CONCAT('<b>T:</b> ' , Animai.tatuagem, ' <b>H:</b> ', Animai.hbbsbb)
+                                    )
+                                ), 
                                 IF(Animai.tatuagem = '' OR Animai.tatuagem IS NULL, 
-                                        IF(Animai.hbbsbb = '' OR Animai.hbbsbb IS NULL, 
-                                                CONCAT('<b>B:</b> ' , Animai.brinco), 
-                                                CONCAT('<b>B:</b> ' , Animai.brinco, ' <b>H:</b> ', Animai.hbbsbb)), 
-                                        IF(Animai.hbbsbb = '' OR Animai.hbbsbb IS NULL, 
-                                                CONCAT('<b>B:</b> ' , Animai.brinco, ' <b>T:</b> ', Animai.tatuagem), 
-                                                CONCAT('<b>B:</b> ' , Animai.brinco, ' <b>T:</b> ', Animai.tatuagem, ' <b>H:</b> ', Animai.hbbsbb))
-                                        )
-                                )"
+                                    IF(Animai.hbbsbb = '' OR Animai.hbbsbb IS NULL, 
+                                        CONCAT('<b>B:</b> ' , Animai.brinco), 
+                                        CONCAT('<b>B:</b> ' , Animai.brinco, ' <b>H:</b> ', Animai.hbbsbb)
+                                    ), 
+                                    IF(Animai.hbbsbb = '' OR Animai.hbbsbb IS NULL, 
+                                        CONCAT('<b>B:</b> ' , Animai.brinco, ' <b>T:</b> ', Animai.tatuagem), 
+                                        CONCAT('<b>B:</b> ' , Animai.brinco, ' <b>T:</b> ', Animai.tatuagem, ' <b>H:</b> ', Animai.hbbsbb)
+                                    )
+                                )
+                            ),
+                            IF (Animai.brinco = '' OR Animai.brinco IS NULL, 
+                                IF(Animai.tatuagem = '' OR Animai.tatuagem IS NULL, 
+                                    IF(Animai.hbbsbb = '' OR Animai.hbbsbb IS NULL, 
+                                        CONCAT('<b>N:</b> ' , Animai.nome), 
+                                        CONCAT('<b>N:</b> ' , Animai.nome, ' <b>H:</b> ' , Animai.hbbsbb)
+                                    ), 
+                                    IF(Animai.hbbsbb = '' OR Animai.hbbsbb IS NULL, 
+                                        CONCAT('<b>N:</b> ' , Animai.nome, ' <b>T:</b> ' , Animai.tatuagem), 
+                                        CONCAT('<b>N:</b> ' , Animai.nome, ' <b>T:</b> ' , Animai.tatuagem, ' <b>H:</b> ', Animai.hbbsbb)
+                                    )
+                                ), 
+                                IF(Animai.tatuagem = '' OR Animai.tatuagem IS NULL, 
+                                    IF(Animai.hbbsbb = '' OR Animai.hbbsbb IS NULL, 
+                                        CONCAT('<b>N:</b> ' , Animai.nome, ' <b>B:</b> ' , Animai.brinco), 
+                                        CONCAT('<b>N:</b> ' , Animai.nome, ' <b>B:</b> ' , Animai.brinco, ' <b>H:</b> ', Animai.hbbsbb)
+                                    ), 
+                                    IF(Animai.hbbsbb = '' OR Animai.hbbsbb IS NULL, 
+                                        CONCAT('<b>N:</b> ' , Animai.nome, ' <b>B:</b> ' , Animai.brinco, ' <b>T:</b> ', Animai.tatuagem), 
+                                        CONCAT('<b>N:</b> ' , Animai.nome, ' <b>B:</b> ' , Animai.brinco, ' <b>T:</b> ', Animai.tatuagem, ' <b>H:</b> ', Animai.hbbsbb)
+                                    )
+                                )
+                            )
+                        )"
     );
 
     /**
@@ -102,6 +130,13 @@ class Animai extends AppModel {
             'tamanho' => array(
                 'rule' => array('maxLength', 15),
                 'message' => 'Este campo não pode ter mais que 15 caracteres.',
+                'allowEmpty' => true
+            ),
+        ),
+        'nome' => array(
+            'tamanho' => array(
+                'rule' => array('maxLength', 250),
+                'message' => 'Este campo não pode ter mais que 250 caracteres.',
                 'allowEmpty' => true
             ),
         ),

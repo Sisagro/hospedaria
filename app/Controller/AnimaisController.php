@@ -167,7 +167,7 @@ class AnimaisController extends AppController {
                     )
                 ),
                 'filter6' => array(
-                    'Animai.hbbsbb' => array(
+                    'Animai.nome' => array(
                         'operator' => 'LIKE',
                         'value' => array(
                             'before' => '%',
@@ -180,8 +180,8 @@ class AnimaisController extends AppController {
         
         $this->Filter->setPaginate('order', array('Cliente.nome' => 'asc'));
         
-        //$this->Filter->setPaginate('conditions', array($this->Filter->getConditions(), 'Animai.empresa_id' => $dadosUser['empresa_id']));
-        $this->Filter->setPaginate('conditions', array($this->Filter->getConditions()));
+        $this->Filter->setPaginate('conditions', array($this->Filter->getConditions(), 'Cliente.holding_id' => $dadosUser['Auth']['User']['holding_id']));
+        //$this->Filter->setPaginate('conditions', array($this->Filter->getConditions()));
         
         $this->set('animais', $this->paginate());
         
@@ -374,9 +374,6 @@ class AnimaisController extends AppController {
             $catID = $this->request->data[$chave]['categoria_id'];
         }
         
-        $dadosUser = $this->Session->read();
-        $empresa_id = $dadosUser['empresa_id'];
-        
         $this->loadModel('Animallote');
         $db = $this->Animallote->getDataSource();
         $subQuery = $db->buildStatement(
@@ -394,11 +391,11 @@ class AnimaisController extends AppController {
             $this->Animallote
         );
         $subQuery = ' Animai.id NOT IN (' . $subQuery . ') ';
-        $subQuery = 'empresa_id = ' . $empresa_id . ' AND categoria_id = ' . $catID . ' AND ' . $subQuery;
+        $subQuery = 'categoria_id = ' . $catID . ' AND ' . $subQuery;
         $subQueryExpression = $db->expression($subQuery);
 
         $conditions[] = $subQueryExpression;
-        
+                
         $this->Animai->recursive = -1;
         $animais = $this->Animai->find('list', array(
             'fields' => array('id', 'descricao'),

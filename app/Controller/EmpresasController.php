@@ -79,8 +79,7 @@ class EmpresasController extends AppController {
         }
         
         $this->Empresa->Holding->Plano->recursive = 0;
-        $plano = $this->Empresa->Holding->Plano->find('first', array('conditions' => array('id' => $dadosUser['Auth']['User']['Holding']['plano_id'])));
-//        debug($plano);        
+        $plano = $this->Empresa->Holding->Plano->find('first', array('conditions' => array('id' => $dadosUser['Auth']['User']['Holding']['plano_id'])));     
         
         $opcoes = array(1 => 'MATRIZ', 2 => 'FILIAL');
         $this->set('opcoes', $opcoes);
@@ -88,7 +87,7 @@ class EmpresasController extends AppController {
         $empresas = $this->Empresa->find('list', array('fields' => array('id', 'nomefantasia'), 'conditions' => array('holding_id'=>$holding_id, "cdempmatriz" => null)));
         $this->set(compact('empresas'));
         
-        if ($this->request->is('post')) {
+        if ($this->request->is('post') || $this->request->is('put')) {
             $this->Empresa->create();
             $separadores = array(".", "-", "/");
             $this->request->data['Empresa']['cnpj'] = str_replace($separadores, '', $this->request->data['Empresa']['cnpjEmpresa']);
@@ -150,6 +149,12 @@ class EmpresasController extends AppController {
         }
         
         if ($this->request->is('post') || $this->request->is('put')) {
+            
+            $separadores = array(".", "-", "/");
+            $this->request->data['Empresa']['cnpj'] = str_replace($separadores, '', $this->request->data['Empresa']['cnpjEmpresa']);
+            $this->request->data['Empresa']['inscestadual'] = str_replace($separadores, '', $this->request->data['Empresa']['inscEstadualEmpresa']);
+            $this->request->data['Empresa']['inscmunicipal'] = str_replace($separadores, '', $this->request->data['Empresa']['inscMunicipalEmpresa']);
+            
             if ($this->request->data['Empresa']['logoempresa']['error'] == 0) {
                 // Apaga a imagem antiga
                 if (!empty($this->request->data['Empresa']['img_foto'])) {

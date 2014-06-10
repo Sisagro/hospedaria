@@ -103,11 +103,6 @@ class Empresa extends AppModel {
             'foreignKey' => 'empresa_id',
             'dependent' => false,
         ),
-        'Animai' => array(
-            'className' => 'Animai',
-            'foreignKey' => 'empresa_id',
-            'dependent' => false,
-        ),
         'Eventomelhoracampo' => array(
             'className' => 'Eventomelhoracampo',
             'foreignKey' => 'empresa_id',

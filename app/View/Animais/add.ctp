@@ -16,12 +16,16 @@ echo $this->Html->link($this->Html->image("botoes/retornar.png", array("alt" => 
     ?>
     <div class="fomr_checkbox_animais">
         <label>Identificação</label><br>
+        <input type="checkbox" name="nome" id="nome" value="check" onclick="myfunction(this);" > Nome
         <input type="checkbox" name="brinco" id="brinco" value="check" onclick="myfunction(this);" > Brinco
         <input type="checkbox" name="tatuagem" id="tatuagem" value="check" onclick="myfunction(this);"> Tatuagem
         <input type="checkbox" name="hbbsbb" id="hbbsbb" value="check" onclick="myfunction(this);"> HBB/SBB/FBB
         <input type="checkbox" name="chip" id="chip" value="check" onclick="myfunction(this);"> Chip eletrônico
         <input type="checkbox" name="colar" id="colar" value="check" onclick="myfunction(this);"> Colar Eletrônico
         <input type="checkbox" name="cor" id="cor" value="check" onclick="myfunction(this);"> Cor
+    </div>
+    <div id="formMostraNome">
+        <?php echo $this->Form->input('nome', array('id' => 'nomeInput', 'type' => 'text', 'label' => 'Nome do animal')); ?>
     </div>
     <div id="formMostraBrinco">
         <?php echo $this->Form->input('brinco', array ('id' => 'brincoInput', 'label' => 'Brinco')); ?>
@@ -97,7 +101,10 @@ $this->Js->get('#racaID')->event(
     
     function myfunction(obj){
         if (obj.checked) {
-            if (obj.name == "brinco") {
+            if (obj.name == "nome") {
+                $("#formMostraNome").show();
+                document.getElementById('nomeInput').focus();
+            } else if (obj.name == "brinco") {
                 $("#formMostraBrinco").show();
                 document.getElementById('brincoInput').focus();
             } else if (obj.name == "chip") {
@@ -117,7 +124,9 @@ $this->Js->get('#racaID')->event(
                 document.getElementById('hbbsbbInput').focus();
             }
         } else {
-            if (obj.name == "brinco") {
+            if (obj.name == "nome") {
+                $("#formMostraNome").hide();
+            } else if (obj.name == "brinco") {
                 $("#formMostraBrinco").hide();
             } else if (obj.name == "chip") {
                 $("#formMostraChip").hide();
@@ -166,6 +175,7 @@ $this->Js->get('#racaID')->event(
                 }
         });
         
+        $("#formMostraNome").hide();
         $("#formMostraBrinco").hide();
         $("#formMostraChip").hide();
         $("#formMostraColar").hide();

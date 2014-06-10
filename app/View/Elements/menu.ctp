@@ -28,7 +28,7 @@
                     <?php
                 }
                 ?>
-                <li><a href="#">Cadastros</a>
+                <li><a href="#">Gerais</a>
                     <ul>
                 <?php
                 $menu_2++;
@@ -40,7 +40,7 @@
                     <?php
                 }
                 ?>
-                <li><a href="#">Pecuária</a>
+                <li><a href="#">Campo</a>
                     <ul>
                 <?php
                 $menu_3++;

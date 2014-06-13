@@ -14,8 +14,8 @@ echo $this->Html->link($this->Html->image("botoes/add.png", array("alt" => "Adic
     <?php foreach ($cidades as $item): ?>
         <tr>
             <td><?php echo h($item['Cidade']['id']); ?>&nbsp;</td>
-            <td><?php echo h($item['Estado']['nome']); ?>&nbsp;</td>
             <td><?php echo h($item['Cidade']['nome']); ?>&nbsp;</td>
+            <td><?php echo h($item['Estado']['nome']); ?>&nbsp;</td>            
             <td>
                 <div id="botoes">
                     <?php

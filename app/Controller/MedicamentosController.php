@@ -9,7 +9,7 @@ App::import('Controller', 'Users');
 class MedicamentosController extends AppController {
     
     function beforeFilter() {
-        $this->set('title_for_layout', 'Medicamentos');
+        $this->set('title_for_layout', 'Evento sanitário');
     }
     
     public function isAuthorized($user) {

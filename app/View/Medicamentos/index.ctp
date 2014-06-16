@@ -9,7 +9,7 @@ echo $this->Html->link($this->Html->image("botoes/add.png", array("alt" => "Adic
         <th><?php echo $this->Paginator->sort('id'); ?></th>
         <th><?php echo $this->Paginator->sort('descricao', 'Descrição'); ?></th>
         <th><?php echo $this->Paginator->sort('palavrachave', 'Palavra chave'); ?></th>
-        <th><?php echo $this->Paginator->sort('Grpeventosanitario.descricao', 'Evento sanitário'); ?></th>
+        <th><?php echo $this->Paginator->sort('Grpeventosanitario.descricao', 'Grp. evento sanitário'); ?></th>
         <th class="actions"><?php echo __('Ações'); ?></th>
     </tr>
     <?php foreach ($medicamentos as $item): ?>

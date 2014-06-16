@@ -232,6 +232,13 @@ class Animai extends AppModel {
      * @var array
      */
     public $belongsTo = array(
+        'Empresa' => array(
+            'className' => 'Empresa',
+            'foreignKey' => 'empresa_id',
+            'conditions' => '',
+            'fields' => '',
+            'order' => ''
+        ),
         'Cliente' => array(
             'className' => 'Cliente',
             'foreignKey' => 'cliente_id',

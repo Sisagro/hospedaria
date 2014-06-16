@@ -23,7 +23,7 @@ class AnimaisController extends AppController {
     public function imprimir() {
         
         $dadosUser = $this->Session->read();
-        
+                
         $sexos = array('M' => 'MACHO', 'F' => 'FÊMEA');
         $this->set('sexos', $sexos);
         
@@ -180,7 +180,7 @@ class AnimaisController extends AppController {
         
         $this->Filter->setPaginate('order', array('Cliente.nome' => 'asc'));
         
-        $this->Filter->setPaginate('conditions', array($this->Filter->getConditions(), 'Cliente.holding_id' => $dadosUser['Auth']['User']['holding_id']));
+        $this->Filter->setPaginate('conditions', array($this->Filter->getConditions(), 'Animai.empresa_id' => $dadosUser['empresa_id']));
         //$this->Filter->setPaginate('conditions', array($this->Filter->getConditions()));
         
         $this->set('animais', $this->paginate());
@@ -203,7 +203,7 @@ class AnimaisController extends AppController {
         $dadosUser = $this->Session->read();
         $animal = $this->Animai->read(null, $id);
         
-        if ($animal['Cliente']['holding_id'] != $dadosUser['Auth']['User']['holding_id']) {
+        if ($animal['empresa_id'] != $dadosUser['empresa_id']) {
             $this->Session->setFlash('Registro não encontrado.', 'default', array('class' => 'mensagem_erro'));
             $this->redirect(array('action' => 'index'));
         }
@@ -219,6 +219,8 @@ class AnimaisController extends AppController {
     public function add() {
         
         $dadosUser = $this->Session->read();
+        $empresa_id = $dadosUser['empresa_id'];
+        $this->set('empresa_id', $empresa_id);
         
         if (!$this->validaPlano($dadosUser['Auth']['User']['holding_id'], $dadosUser['Auth']['User']['Holding']['plano_id'])) {
             $this->redirect(array('action' => 'index'));
@@ -285,7 +287,7 @@ class AnimaisController extends AppController {
         $dadosUser = $this->Session->read();
         
         $animal = $this->Animai->read(null, $id);
-        if ($animal['Cliente']['holding_id'] != $dadosUser['Auth']['User']['holding_id']) {
+        if ($animal['empresa_id'] != $dadosUser['empresa_id']) {
             $this->Session->setFlash('Registro não encontrado.', 'default', array('class' => 'mensagem_erro'));
             $this->redirect(array('action' => 'index'));
         }

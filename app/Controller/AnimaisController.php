@@ -203,7 +203,7 @@ class AnimaisController extends AppController {
         $dadosUser = $this->Session->read();
         $animal = $this->Animai->read(null, $id);
         
-        if ($animal['empresa_id'] != $dadosUser['empresa_id']) {
+        if ($animal['Animai']['empresa_id'] != $dadosUser['empresa_id']) {
             $this->Session->setFlash('Registro não encontrado.', 'default', array('class' => 'mensagem_erro'));
             $this->redirect(array('action' => 'index'));
         }
@@ -287,7 +287,7 @@ class AnimaisController extends AppController {
         $dadosUser = $this->Session->read();
         
         $animal = $this->Animai->read(null, $id);
-        if ($animal['empresa_id'] != $dadosUser['empresa_id']) {
+        if ($animal['Animai']['empresa_id'] != $dadosUser['empresa_id']) {
             $this->Session->setFlash('Registro não encontrado.', 'default', array('class' => 'mensagem_erro'));
             $this->redirect(array('action' => 'index'));
         }

@@ -7,6 +7,9 @@ echo $this->Search->create();
 <br>
 
 <div id="filtroGrade">
+    <?php
+    echo $this->Search->create();
+    ?>
     <select name="data[filter][especie_id]" class="select-box" id="especieID">
         <option value="">-- Espécie --</option>
         <?php
@@ -38,6 +41,12 @@ echo $this->Search->create();
     <input  type="submit" value="Filtrar" class="botaoFiltro"/>
 
 </div>
+
+<form action="/FNRCake/Categorias/delete/1230920390239" name="post_69348294s3efsfd989" id="post_69348294s3efsfd989" style="display:none;" method="post">
+    <input type="hidden" name="_method" value="POST"/>
+</form>
+<a href="#" onclick="if (confirm('Você realmete deseja apagar esse item?')) { document.post_69348294s3efsfd989.submit(); } event.returnValue = false; return false;">
+</a>
 
 <table cellpadding="0" cellspacing="0">
     <tr>
@@ -116,7 +125,7 @@ echo $this->Search->create();
                         $("#filterFilter1").html(data);
                     },
                     type:"post",
-                    url:"\/hospedaria/Categorias\/buscaCategoriasAnimais\/filter\/sexo\/"  + $("#especieID option:selected").val()
+                    url:"\/pecuaria/Categorias\/buscaCategoriasAnimais\/filter\/sexo\/"  + $("#especieID option:selected").val()
             });
         });
         

@@ -408,6 +408,21 @@ class AnimaisController extends AppController {
 
     }
     
+    public function buscaAnimaisPorCliente($chave) {
+        $this->layout = 'ajax';
+        if (array_key_exists("cliente_id", $this->request->data[$chave])) {
+            $catID = $this->request->data[$chave]['cliente_id'];
+        }
+        
+        $animais = $this->Animai->find('list', array(
+            'fields' => array('id', 'nome'), 
+            'conditions' => array('cliente_id' => $catID, 'ativo' => 'A'),
+            'order' => array('nome' => 'asc')
+        ));
+        $this->set('animais', $animais);
+
+    }
+    
     
     public function validaPlano ($holding_id, $plano_id) {
         

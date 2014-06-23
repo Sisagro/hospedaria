@@ -17,16 +17,19 @@ class Fechamento extends AppModel {
         'empresa_id' => array(
             'numeric' => array(
                 'rule' => array('numeric'),
+                'message' => 'Este campo não pode ser vazio.',
             ),
         ),
         'cliente_id' => array(
             'numeric' => array(
                 'rule' => array('numeric'),
+                'message' => 'Este campo não pode ser vazio.',
             ),
         ),
         'animai_id' => array(
             'numeric' => array(
                 'rule' => array('numeric'),
+                'message' => 'Este campo não pode ser vazio.',
             ),
         ),
         'dtinicial' => array(

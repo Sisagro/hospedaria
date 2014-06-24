@@ -54,10 +54,9 @@ echo $this->Html->link($this->Html->image("botoes/retornar.png", array("alt" => 
     </div>
     
     <?php
-    
     echo $this->Form->input('dtentrada', array('id' => 'dtentrada', 'class' => 'data', 'type' => 'text', 'label' => 'Data de entrada'));
     echo $this->Form->input('caracteristica', array ('id' => 'caracteristica', 'type' => 'textarea', 'label' => 'Características', 'escape' => false));
-    echo $this->Form->input('Tiposervico.Tiposervico',array('title' => 'CTRL + Click (para selecionar mais de um)', 'label'=>'Escolha os tipos de serviços', 'type'=>'select', 'multiple'=>true));
+    echo $this->Form->input('Tiposervico.Tiposervico',array('title' => 'CTRL + Click (para selecionar mais de um)', 'label'=>'Escolha os tipos de serviços', 'type'=>'select', 'multiple'=>true, 'style' => 'height: 210px;'));
     echo $this->Form->input('valor', array('id' => 'valor', 'type' => 'text', 'label' => 'Valor mensal do animal'));
     echo $this->Form->input('ativo', array ('id' => 'ativo', 'type' => 'hidden', 'value' => 'A'));
     echo $this->Form->input('empresa_id', array('type' => 'hidden', 'value' => $empresa_id));

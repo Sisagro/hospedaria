@@ -258,7 +258,11 @@ class AnimaisController extends AppController {
         ));
         $this->set(compact('causabaixas'));
         
-        $tiposervicos = $this->Animai->Tiposervico->find('list',array('fields'=>array('id','descricao'),'order'=>array('Tiposervico.descricao' => 'asc')));
+        $tiposervicos = $this->Animai->Tiposervico->find('list',array(
+            'fields'=>array('id','descricao'),
+            'conditions' => array('empresa_id' => $empresa_id),
+            'order'=>array('Tiposervico.descricao' => 'asc')
+        ));
         $this->set(compact('tiposervicos'));
         
         if ($this->request->is('post')) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="animais" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5fae1694-9774-417b-9d32-f37b515dd562">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="101"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="empresa_id" class="java.lang.String"/>
 	<parameter name="especie_id" class="java.lang.String"/>
@@ -27,8 +27,6 @@
      animais.`pelagen_id` AS animais_pelagen_id,
      animais.`categoria_id` AS animais_categoria_id,
      animais.`grausangue_id` AS animais_grausangue_id,
-     animais.`dtnasc` AS animais_dtnasc,
-     animais.`dtcomprado` AS animais_dtcomprado,
      animais.`brinco` AS animais_brinco,
      animais.`chipeletronico` AS animais_chipeletronico,
      animais.`colareletronico` AS animais_colareletronico,
@@ -37,14 +35,41 @@
      animais.`cor` AS animais_cor,
      animais.`causabaixa_id` AS animais_causabaixa_id,
      animais.`caracteristica` AS animais_caracteristica,
-     animais.`ativo` AS animais_ativo
+     animais.`ativo` AS animais_ativo,
+     animais.`dtentrada` AS animais_dtentrada,
+     animais.`nome` AS animais_nome,
+     animais.`cliente_id` AS animais_cliente_id,
+     animais.`valor` AS animais_valor,
+     animais.`img_foto` AS animais_img_foto,
+     clientes.`id` AS clientes_id,
+     clientes.`holding_id` AS clientes_holding_id,
+     clientes.`cpf` AS clientes_cpf,
+     clientes.`nome` AS clientes_nome,
+     clientes.`sobrenome` AS clientes_sobrenome,
+     clientes.`sexo` AS clientes_sexo,
+     clientes.`rg` AS clientes_rg,
+     clientes.`dtnascimento` AS clientes_dtnascimento,
+     clientes.`ativo` AS clientes_ativo,
+     enderecos.`id` AS enderecos_id,
+     enderecos.`empresa_id` AS enderecos_empresa_id,
+     enderecos.`cidade_id` AS enderecos_cidade_id,
+     enderecos.`rua` AS enderecos_rua,
+     enderecos.`bairro` AS enderecos_bairro,
+     enderecos.`numero` AS enderecos_numero,
+     enderecos.`complemento` AS enderecos_complemento,
+     enderecos.`cep` AS enderecos_cep,
+     enderecos.`cliente_id` AS enderecos_cliente_id,
+     enderecos.`observacao` AS enderecos_observacao,
+     enderecos.`telefone` AS enderecos_telefone
 FROM
-     `especies` especies
-INNER JOIN `categorias` categorias ON especies.`id` = categorias.`especie_id`
-INNER JOIN `animais` animais ON categorias.`id` = animais.`categoria_id`
-WHERE animais.empresa_id = $P{empresa_id}
-  AND animais.especie_id = IF($P{especie_id} = 0, animais.especie_id, $P{especie_id})
-  AND animais.categoria_id = IF($P{categoria_id} = 0, animais.categoria_id, $P{categoria_id})]]>
+     `especies` especies INNER JOIN `categorias` categorias ON especies.`id` = categorias.`especie_id`
+     INNER JOIN `animais` animais ON categorias.`id` = animais.`categoria_id`
+     INNER JOIN `clientes` clientes ON animais.`cliente_id` = clientes.`id`
+     INNER JOIN `enderecos` enderecos ON clientes.`id` = enderecos.`cliente_id`
+WHERE
+     animais.empresa_id = $P{empresa_id}
+ AND IF($P{especie_id} = 0,animais.especie_id,$P{especie_id})
+ AND IF($P{categoria_id} = 0,animais.categoria_id,$P{categoria_id})]]>
 	</queryString>
 	<field name="especies_id" class="java.lang.Integer"/>
 	<field name="especies_holding_id" class="java.lang.Integer"/>
@@ -61,8 +86,6 @@ WHERE animais.empresa_id = $P{empresa_id}
 	<field name="animais_pelagen_id" class="java.lang.Integer"/>
 	<field name="animais_categoria_id" class="java.lang.Integer"/>
 	<field name="animais_grausangue_id" class="java.lang.Integer"/>
-	<field name="animais_dtnasc" class="java.sql.Timestamp"/>
-	<field name="animais_dtcomprado" class="java.sql.Timestamp"/>
 	<field name="animais_brinco" class="java.lang.String"/>
 	<field name="animais_chipeletronico" class="java.lang.String"/>
 	<field name="animais_colareletronico" class="java.lang.String"/>
@@ -72,7 +95,31 @@ WHERE animais.empresa_id = $P{empresa_id}
 	<field name="animais_causabaixa_id" class="java.lang.Integer"/>
 	<field name="animais_caracteristica" class="java.lang.String"/>
 	<field name="animais_ativo" class="java.lang.String"/>
-	<field name="zebrado" class="java.lang.String"/>
+	<field name="animais_dtentrada" class="java.sql.Timestamp"/>
+	<field name="animais_nome" class="java.lang.String"/>
+	<field name="animais_cliente_id" class="java.lang.Integer"/>
+	<field name="animais_valor" class="java.math.BigDecimal"/>
+	<field name="animais_img_foto" class="java.lang.String"/>
+	<field name="clientes_id" class="java.lang.Integer"/>
+	<field name="clientes_holding_id" class="java.lang.Integer"/>
+	<field name="clientes_cpf" class="java.lang.String"/>
+	<field name="clientes_nome" class="java.lang.String"/>
+	<field name="clientes_sobrenome" class="java.lang.String"/>
+	<field name="clientes_sexo" class="java.lang.String"/>
+	<field name="clientes_rg" class="java.lang.String"/>
+	<field name="clientes_dtnascimento" class="java.sql.Date"/>
+	<field name="clientes_ativo" class="java.lang.String"/>
+	<field name="enderecos_id" class="java.lang.Integer"/>
+	<field name="enderecos_empresa_id" class="java.lang.Integer"/>
+	<field name="enderecos_cidade_id" class="java.lang.Integer"/>
+	<field name="enderecos_rua" class="java.lang.String"/>
+	<field name="enderecos_bairro" class="java.lang.String"/>
+	<field name="enderecos_numero" class="java.lang.String"/>
+	<field name="enderecos_complemento" class="java.lang.String"/>
+	<field name="enderecos_cep" class="java.lang.String"/>
+	<field name="enderecos_cliente_id" class="java.lang.Integer"/>
+	<field name="enderecos_observacao" class="java.lang.String"/>
+	<field name="enderecos_telefone" class="java.lang.String"/>
 	<sortField name="especies_descricao"/>
 	<sortField name="categorias_descricao"/>
 	<variable name="animais_id_1" class="java.lang.Integer" resetType="Group" resetGroup="Categoria" calculation="Count">
@@ -84,6 +131,7 @@ WHERE animais.empresa_id = $P{empresa_id}
 	<variable name="identificacao_animal" class="java.lang.String">
 		<variableExpression><![CDATA[$F{animais_brinco} != null]]></variableExpression>
 	</variable>
+	<variable name="cliente" class="java.lang.String"/>
 	<group name="Especie">
 		<groupExpression><![CDATA[$F{especies_id}]]></groupExpression>
 		<groupHeader>
@@ -107,21 +155,21 @@ WHERE animais.empresa_id = $P{empresa_id}
 		<groupFooter>
 			<band height="32">
 				<textField>
-					<reportElement x="168" y="3" width="90" height="20" uuid="d7e7a2c4-7ead-402d-9c81-2c15185f1454"/>
+					<reportElement x="703" y="3" width="88" height="20" uuid="d7e7a2c4-7ead-402d-9c81-2c15185f1454"/>
 					<textElement>
 						<font size="12" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{animais_id_2}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="54" y="3" width="37" height="20" uuid="c445d344-1f58-4254-a7a8-ebd833b78999"/>
+					<reportElement x="589" y="3" width="37" height="20" uuid="c445d344-1f58-4254-a7a8-ebd833b78999"/>
 					<textElement>
 						<font size="12" isBold="true" isUnderline="false"/>
 					</textElement>
 					<text><![CDATA[Total]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="98" y="3" width="63" height="20" uuid="ce0dcb44-ebe9-4fcf-8293-8bb22a5ee944"/>
+					<reportElement x="633" y="3" width="63" height="20" uuid="ce0dcb44-ebe9-4fcf-8293-8bb22a5ee944"/>
 					<textElement>
 						<font size="12" isBold="true" isUnderline="false"/>
 					</textElement>
@@ -156,21 +204,21 @@ WHERE animais.empresa_id = $P{empresa_id}
 		<groupFooter>
 			<band height="22">
 				<staticText>
-					<reportElement x="54" y="0" width="39" height="20" uuid="794faddf-4bf7-4ebe-a788-00cb3eb11172"/>
+					<reportElement x="589" y="0" width="39" height="20" uuid="794faddf-4bf7-4ebe-a788-00cb3eb11172"/>
 					<textElement>
 						<font size="12" isBold="true" isUnderline="false"/>
 					</textElement>
 					<text><![CDATA[Total]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="98" y="0" width="63" height="20" uuid="3ba53fa3-013c-48ee-8c41-95e37065c16c"/>
+					<reportElement x="633" y="0" width="63" height="20" uuid="3ba53fa3-013c-48ee-8c41-95e37065c16c"/>
 					<textElement>
 						<font size="12" isBold="true" isUnderline="false"/>
 					</textElement>
 					<text><![CDATA[categoria]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="168" y="0" width="88" height="20" uuid="b3227677-7572-42ac-9c7d-2247fbf7e56f"/>
+					<reportElement x="703" y="0" width="88" height="20" uuid="b3227677-7572-42ac-9c7d-2247fbf7e56f"/>
 					<textElement>
 						<font size="12" isBold="true"/>
 					</textElement>
@@ -222,50 +270,72 @@ WHERE animais.empresa_id = $P{empresa_id}
 	<columnHeader>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement x="310" y="0" width="283" height="20" uuid="56c44c70-ac88-4b01-8083-8a787c2d7dfe"/>
+				<reportElement x="10" y="0" width="283" height="20" uuid="56c44c70-ac88-4b01-8083-8a787c2d7dfe"/>
 				<textElement>
 					<font size="12" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Identificação do animal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="598" y="0" width="61" height="20" uuid="7799a083-0c5a-4da3-8344-a1edeab6e23c"/>
+				<reportElement x="298" y="0" width="61" height="20" uuid="7799a083-0c5a-4da3-8344-a1edeab6e23c"/>
 				<textElement textAlignment="Center">
 					<font size="12" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Sexo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="667" y="0" width="100" height="20" uuid="c1f21eb2-6e8b-4849-b11d-1c59c7ec0000"/>
+				<reportElement x="367" y="0" width="100" height="20" uuid="c1f21eb2-6e8b-4849-b11d-1c59c7ec0000"/>
 				<textElement textAlignment="Center">
 					<font size="12" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[Dt. nascimento]]></text>
+				<text><![CDATA[Dt. entrada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="477" y="0" width="156" height="20" uuid="05444a23-3b84-49e3-9585-d314f99d58cf"/>
+				<textElement>
+					<font size="12" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="643" y="0" width="148" height="20" uuid="12247bd1-c32f-4eaf-8534-71e53b05cf67"/>
+				<textElement>
+					<font size="12" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Fone]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="26" splitType="Stretch">
 			<textField>
-				<reportElement x="599" y="2" width="61" height="20" uuid="ce56951c-9082-42c3-b98c-c9e46b677906"/>
+				<reportElement x="299" y="3" width="61" height="20" uuid="ce56951c-9082-42c3-b98c-c9e46b677906"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{categorias_sexo}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="667" y="3" width="100" height="20" uuid="94aa6bad-e0bb-41e4-b4d1-3a84a0e78b34"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{animais_dtnasc}]]></textFieldExpression>
-			</textField>
 			<textField>
-				<reportElement x="310" y="3" width="283" height="20" uuid="ffa6cef6-c9e2-4315-903e-5a027b6627c6"/>
+				<reportElement x="10" y="3" width="283" height="20" uuid="ffa6cef6-c9e2-4315-903e-5a027b6627c6"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA["B:  " + $F{animais_brinco} + "  T:  " + $F{animais_tatuagem} + "  HBB/SBB/FBB:  " + $F{animais_hbbsbb}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["N:  " + $F{animais_nome} + " B:  " + $F{animais_brinco} + "  T:  " + $F{animais_tatuagem} + "  HBB/SBB/FBB:  " + $F{animais_hbbsbb}]]></textFieldExpression>
 			</textField>
 			<frame>
 				<reportElement x="61" y="2" width="100" height="20" printWhenGroupChanges="Categoria" forecolor="#CCCCCC" backcolor="#FFFFFF" uuid="8c814330-1cf6-4e28-8d7a-bd1f6d3da9aa"/>
 			</frame>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="367" y="3" width="100" height="20" uuid="e562cf24-4641-4911-abdf-360c84be7fa7"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{animais_dtentrada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="477" y="3" width="154" height="20" uuid="267c705d-7329-4260-b6e6-65dff73029fb"/>
+				<textFieldExpression><![CDATA[$F{clientes_nome} + "  " + $F{clientes_sobrenome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="643" y="3" width="148" height="20" uuid="385131a6-25eb-4d40-8947-eb441aa0bdef"/>
+				<textFieldExpression><![CDATA[$F{enderecos_telefone}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>

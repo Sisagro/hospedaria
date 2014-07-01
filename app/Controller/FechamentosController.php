@@ -130,8 +130,12 @@ class FechamentosController extends AppController {
                 $this->set('eventosExibicao', $eventosExibicao);
                 
                 $eventosSanitarios = array();
-                foreach($eventosExibicao as $key => $subcat){
-                    $eventosSanitarios['Eventosanitario'] = array($key, $subcat['Eventosanitario']['id']);
+                if (count($eventosExibicao) == 1) {
+                    $eventosSanitarios['Eventosanitario'] = array (0 => $eventosExibicao[0]['Eventosanitario']['id']);
+                } else {
+                    foreach($eventosExibicao as $key => $subcat){
+                        $eventosSanitarios['Eventosanitario'] = array($key, $subcat['Eventosanitario']['id']);
+                    }
                 }
                 
                 $this->Fechamento->Eventoalimentacao->recursive = 0;

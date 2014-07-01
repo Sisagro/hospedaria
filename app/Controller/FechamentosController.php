@@ -132,7 +132,7 @@ class FechamentosController extends AppController {
                 $eventosSanitarios = array();
                 if (count($eventosExibicao) == 1) {
                     $eventosSanitarios['Eventosanitario'] = array (0 => $eventosExibicao[0]['Eventosanitario']['id']);
-                } else {
+                } elseif (count($eventosExibicao) > 1) {
                     foreach($eventosExibicao as $key => $subcat){
                         $eventosSanitarios['Eventosanitario'] = array($key, $subcat['Eventosanitario']['id']);
                     }
@@ -152,7 +152,7 @@ class FechamentosController extends AppController {
                 $eventosAlimentacoes = array();
                 if (count($alimentacaoExibicao) == 1) {
                     $eventosAlimentacoes['Eventoalimentacao'] = array (0 => $alimentacaoExibicao[0]['Eventoalimentacao']['id']);
-                } else {
+                } elseif (count($alimentacaoExibicao) > 1) {
                     foreach($alimentacaoExibicao as $key => $subcat){
                         $eventosAlimentacoes['Eventoalimentacao'] = array($key, $subcat['Eventoalimentacao']['id']);
                     }

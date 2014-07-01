@@ -18,7 +18,7 @@
     
     $valorfinal = str_replace(",", ".", $animal['Animai']['valor']);
     
-    if (count($eventosExibicao) > 0 && count($alimentacaoExibicao) > 0) {
+    if (count($eventosExibicao) > 0 || count($alimentacaoExibicao) > 0) {
         $opcoesEventos = array();
         if (count($eventosExibicao) > 0) {
             $opcoesEventos[] = "Eventos sanitários realizados no período: ";

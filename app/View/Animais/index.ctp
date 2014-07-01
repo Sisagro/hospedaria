@@ -28,7 +28,7 @@ if ($validaPlano) {
 
 </div>
 
-<form action="/FNRCake/Jogos/delete/1230920390239" name="post_69348294s3efsfd989" id="post_69348294s3efsfd989" style="display:none;" method="post">
+<form action="/lelele/" name="post_69348294s3efsfd989" id="post_69348294s3efsfd989" style="display:none;" method="post">
     <input type="hidden" name="_method" value="POST"/>
 </form>
 <a href="#" onclick="if (confirm('Você realmete deseja apagar esse item?')) { document.post_69348294s3efsfd989.submit(); } event.returnValue = false; return false;">

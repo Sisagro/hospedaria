@@ -102,18 +102,21 @@ class Fechamento extends AppModel {
             'foreignKey'            => 'fechamento_id',
             'associationForeignKey' => 'tiposervico_id',
             'order'                 => 'Tiposervico.descricao',
+            'unique'                => 'keepExisting',
         ),
         'Eventosanitario' => array(
             'className'             => 'Eventosanitario',
             'joinTable'             => 'fechamentoeventos',
             'foreignKey'            => 'fechamento_id',
             'associationForeignKey' => 'eventosanitario_id',
+            'unique'                => 'keepExisting',
         ),
         'Eventoalimentacao' => array(
             'className'             => 'Eventoalimentacao',
             'joinTable'             => 'fechamentoalimentacaos',
             'foreignKey'            => 'fechamento_id',
             'associationForeignKey' => 'eventoalimentacao_id',
+            'unique'                => 'keepExisting',
         ),
     );
     

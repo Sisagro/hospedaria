@@ -75,7 +75,6 @@ class GroupsController extends AppController {
         
         if ($this->request->is('post')) {
             $this->Group->create();
-//            debug($this->request->data);
             if ($this->Group->save($this->request->data)) {
                 $this->Session->setFlash('Grupo adicionado com sucesso!', 'default', array('class' => 'mensagem_sucesso'));
                 $this->redirect(array('action' => 'index'));

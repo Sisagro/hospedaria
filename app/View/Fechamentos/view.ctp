@@ -25,7 +25,7 @@ echo $this->Html->link($this->Html->image("botoes/retornar.png", array("alt" => 
 <?php endforeach; ?>
 <br>
 <?php
-if (count($fechamento['Eventosanitario']) > 0 && count($fechamento['Eventoalimentacao']) > 0 ) {
+if (count($fechamento['Eventosanitario']) > 0 || count($fechamento['Eventoalimentacao']) > 0 ) {
     if (count($fechamento['Eventosanitario']) > 0) {
         ?>
         <strong> Eventos sanitários realizados: </strong>
@@ -53,10 +53,6 @@ if (count($fechamento['Eventosanitario']) > 0 && count($fechamento['Eventoalimen
     echo "<b>Não foram realizados eventos extras no período</b>";
 }
 ?>
-<br>
-<strong> Observação: </strong>
-<?php echo $fechamento['Fechamento']['observacao']; ?>
-<br><br>
 <strong> Valor de desconto: </strong>
 <?php echo $fechamento['Fechamento']['valordesconto']; ?>
 <br><br>

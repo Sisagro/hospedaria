@@ -134,7 +134,7 @@ class FechamentosController extends AppController {
                     $eventosSanitarios['Eventosanitario'] = array (0 => $eventosExibicao[0]['Eventosanitario']['id']);
                 } elseif (count($eventosExibicao) > 1) {
                     foreach($eventosExibicao as $key => $subcat){
-                        $eventosSanitarios['Eventosanitario'] = array($key, $subcat['Eventosanitario']['id']);
+                        $eventosSanitarios['Eventosanitario'][$key] = $subcat['Eventosanitario']['id'];
                     }
                 }
                 
@@ -154,7 +154,7 @@ class FechamentosController extends AppController {
                     $eventosAlimentacoes['Eventoalimentacao'] = array (0 => $alimentacaoExibicao[0]['Eventoalimentacao']['id']);
                 } elseif (count($alimentacaoExibicao) > 1) {
                     foreach($alimentacaoExibicao as $key => $subcat){
-                        $eventosAlimentacoes['Eventoalimentacao'] = array($key, $subcat['Eventoalimentacao']['id']);
+                        $eventosAlimentacoes['Eventoalimentacao'][$key] = $subcat['Eventoalimentacao']['id'];
                     }
                 }
                                 
@@ -167,6 +167,7 @@ class FechamentosController extends AppController {
                 $this->request->data['Tiposervico']['Tiposervico'] = $tipoServicos;
                 
                 if ($this->request->data['Fechamento']['confirma'] == 'S') {
+                    
                     if ($this->Fechamento->save($this->request->data)) {
                         $this->Session->setFlash('Fechamento adicionado com sucesso!', 'default', array('class' => 'mensagem_sucesso'));
                         $this->redirect(array('action' => 'index'));

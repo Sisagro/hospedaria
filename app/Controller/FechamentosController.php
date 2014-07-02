@@ -116,38 +116,35 @@ class FechamentosController extends AppController {
                     'conditions' => array('animai_id' => $this->request->data['Fechamento']['animai_id'])
                 ));
                 
-                $this->Fechamento->Eventosanitario->Animalevento->recursive = -1;
-                $eventosDoAnimal = $this->Fechamento->Eventosanitario->Animalevento->find('all', array(
-                    'conditions' => array(
-                        'animai_id' => $this->request->data['Fechamento']['animai_id'],
+                $conditionsSubQuery['Animalevento.animai_id'] = $this->request->data['Fechamento']['animai_id'];
+
+                $db = $this->Fechamento->Eventosanitario->getDataSource();
+                $subQuery = $db->buildStatement(
+                    array(
+                        'fields'     => array('Animalevento.eventosanitario_id'),
+                        'table'      => $db->fullTableName($this->Fechamento->Eventosanitario->Animalevento),
+                        'alias'      => 'Animalevento',
+                        'limit'      => null,
+                        'offset'     => null,
+                        'joins'      => array(),
+                        'conditions' => $conditionsSubQuery,
+                        'order'      => null,
+                        'group'      => null
                     ),
-                 ));
-                $arrayEventos = array();
-                foreach($eventosDoAnimal as $key => $subcat){
-                    $arrayEventos[$key] = $subcat['Animalevento']['eventosanitario_id'];
-                }
+                    $this->Fechamento->Eventosanitario->Animalevento
+                );
+                $subQuery = ' Eventosanitario.id IN (' . $subQuery . ') ';
+                $subQueryExpression = $db->expression($subQuery);
                 
-                $this->Fechamento->Eventosanitario->recursive = 1;
-                if (count($arrayEventos) > 0) {
-                    $eventosExibicao = $this->Fechamento->Eventosanitario->find('all', array(
-                        'conditions' => array(
-                            'categorialote_id' => $categoriaLote[0]['Animallote']['categorialote_id'],
+                $conditions = array();
+                $conditions[] = array('categorialote_id' => $categoriaLote[0]['Animallote']['categorialote_id'],
                             'dtevento >=' => $this->Fechamento->formataData($this->request->data['Fechamento']['dtinicial'], 'EN'),
-                            'dtevento <=' => $this->Fechamento->formataData($this->request->data['Fechamento']['dtfinal'], 'EN'),
-                            'Eventosanitario.id IN' => $arrayEventos,
-                        ),
-                        'order' => array('dtevento' => 'desc'),
-                    ));
-                } else {
-                    $eventosExibicao = $this->Fechamento->Eventosanitario->find('all', array(
-                        'conditions' => array(
-                            'categorialote_id' => $categoriaLote[0]['Animallote']['categorialote_id'],
-                            'dtevento >=' => $this->Fechamento->formataData($this->request->data['Fechamento']['dtinicial'], 'EN'),
-                            'dtevento <=' => $this->Fechamento->formataData($this->request->data['Fechamento']['dtfinal'], 'EN'),
-                        ),
-                        'order' => array('dtevento' => 'desc'),
-                    ));
-                } 
+                            'dtevento <=' => $this->Fechamento->formataData($this->request->data['Fechamento']['dtfinal'], 'EN'));
+                $conditions[] = $subQueryExpression;
+                
+                $order = array('dtevento' => 'desc');
+                $eventosExibicao = $this->Fechamento->Eventosanitario->find('all', compact('conditions', 'order'));
+                
                 $this->set('eventosExibicao', $eventosExibicao);
                 
                 $eventosSanitarios = array();
@@ -159,39 +156,38 @@ class FechamentosController extends AppController {
                     }
                 }
                 
-                $this->Fechamento->Eventoalimentacao->Animalalimentacao->recursive = -1;
-                $alimentacoesDoAnimal = $this->Fechamento->Eventoalimentacao->Animalalimentacao->find('all', array(
-                    'conditions' => array(
-                        'animai_id' => $this->request->data['Fechamento']['animai_id'],
+                $conditionsSubQuery = array();
+                $conditionsSubQuery['Animalalimentacao.animai_id'] = $this->request->data['Fechamento']['animai_id'];
+
+                $db = $this->Fechamento->Eventoalimentacao->getDataSource();
+                $subQuery = $db->buildStatement(
+                    array(
+                        'fields'     => array('Animalalimentacao.alimentacao_id'),
+                        'table'      => $db->fullTableName($this->Fechamento->Eventoalimentacao->Animalalimentacao),
+                        'alias'      => 'Animalalimentacao',
+                        'limit'      => null,
+                        'offset'     => null,
+                        'joins'      => array(),
+                        'conditions' => $conditionsSubQuery,
+                        'order'      => null,
+                        'group'      => null
                     ),
-                 ));
-                $arrayAlimentacoes = array();
-                foreach($alimentacoesDoAnimal as $key => $subcat){
-                    $arrayAlimentacoes[$key] = $subcat['Animalalimentacao']['alimentacao_id'];
-                }
-                $this->Fechamento->Eventoalimentacao->recursive = 0;
-                if (count($arrayAlimentacoes) > 0) {
-                    $alimentacaoExibicao = $this->Fechamento->Eventoalimentacao->find('all', array(
-                        'conditions' => array(
-                            'categorialote_id' => $categoriaLote[0]['Animallote']['categorialote_id'],
+                    $this->Fechamento->Eventoalimentacao->Animalalimentacao
+                );
+                $subQuery = ' Eventoalimentacao.id IN (' . $subQuery . ') ';
+                $subQueryExpression = $db->expression($subQuery);
+                
+                $conditions = array();
+                $conditions[] = array('categorialote_id' => $categoriaLote[0]['Animallote']['categorialote_id'],
                             'dtalimentacao >=' => $this->Fechamento->formataData($this->request->data['Fechamento']['dtinicial'], 'EN'),
-                            'dtalimentacao <=' => $this->Fechamento->formataData($this->request->data['Fechamento']['dtfinal'], 'EN'),
-                            'Eventoalimentacao.id IN' => $arrayAlimentacoes,
-                        ),
-                        'order' => array('dtalimentacao' => 'desc')
-                    ));
-                } else {
-                    $alimentacaoExibicao = $this->Fechamento->Eventoalimentacao->find('all', array(
-                        'conditions' => array(
-                            'categorialote_id' => $categoriaLote[0]['Animallote']['categorialote_id'],
-                            'dtalimentacao >=' => $this->Fechamento->formataData($this->request->data['Fechamento']['dtinicial'], 'EN'),
-                            'dtalimentacao <=' => $this->Fechamento->formataData($this->request->data['Fechamento']['dtfinal'], 'EN'),
-                        ),
-                        'order' => array('dtalimentacao' => 'desc')
-                    ));
-                }
+                            'dtalimentacao <=' => $this->Fechamento->formataData($this->request->data['Fechamento']['dtfinal'], 'EN'));
+                $conditions[] = $subQueryExpression;
+                
+                $order = array('dtalimentacao' => 'desc');
+                $alimentacaoExibicao = $this->Fechamento->Eventoalimentacao->find('all', compact('conditions', 'order'));
+                
                 $this->set('alimentacaoExibicao', $alimentacaoExibicao);
-              
+                
                 $eventosAlimentacoes = array();
                 if (count($alimentacaoExibicao) == 1) {
                     $eventosAlimentacoes['Eventoalimentacao'] = array (0 => $alimentacaoExibicao[0]['Eventoalimentacao']['id']);

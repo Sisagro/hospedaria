@@ -97,7 +97,7 @@ class Eventosanitario extends AppModel {
                 'joinTable'             => 'animaleventos',
                 'foreignKey'            => 'eventosanitario_id',
                 'associationForeignKey' => 'animai_id',
-                'dependent'             => true,
+                'dependent'             => false,
             )
     );
     

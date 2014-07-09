@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="animais" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5fae1694-9774-417b-9d32-f37b515dd562">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="101"/>
+	<property name="ireport.x" value="103"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="empresa_id" class="java.lang.String"/>
 	<parameter name="especie_id" class="java.lang.String"/>
@@ -65,7 +65,7 @@ FROM
      `especies` especies INNER JOIN `categorias` categorias ON especies.`id` = categorias.`especie_id`
      INNER JOIN `animais` animais ON categorias.`id` = animais.`categoria_id`
      INNER JOIN `clientes` clientes ON animais.`cliente_id` = clientes.`id`
-     INNER JOIN `enderecos` enderecos ON clientes.`id` = enderecos.`cliente_id`
+     LEFT OUTER JOIN `enderecos` enderecos ON clientes.`id` = enderecos.`cliente_id`
 WHERE
      animais.empresa_id = $P{empresa_id}
  AND IF($P{especie_id} = 0,animais.especie_id,$P{especie_id})

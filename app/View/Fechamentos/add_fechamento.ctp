@@ -1,3 +1,7 @@
+<?php
+echo $this->Html->link($this->Html->image("botoes/retornar.png", array("alt" => "Retornar", "title" => "Retornar")), array('action' => 'index'), array('escape' => false));
+?>
+<br>
 <br>
 <?php echo $this->Form->create('Fechamento'); ?>
 <fieldset>
@@ -18,7 +22,7 @@
     
     $valorfinal = str_replace(",", ".", $animal['Animai']['valor']);
     
-    if (count($eventosExibicao) > 0 && count($alimentacaoExibicao) > 0) {
+    if (count($eventosExibicao) > 0 || count($alimentacaoExibicao) > 0) {
         $opcoesEventos = array();
         if (count($eventosExibicao) > 0) {
             $opcoesEventos[] = "Eventos sanitários realizados no período: ";

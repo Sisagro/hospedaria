@@ -1,5 +1,6 @@
 <?php
 echo $this->Html->link($this->Html->image("botoes/retornar.png", array("alt" => "Retornar", "title" => "Retornar")), array('action' => 'index'), array('escape' => false, 'onclick' => 'history.go(-1); return false;'));
+echo $this->Html->link($this->Html->image("botoes/imprimir.png", array("alt" => "Imprimir", "title" => "Imprimir")), array('action' => 'print'), array('escape' => false));
 ?>
 <br>
 <br>
@@ -25,7 +26,7 @@ echo $this->Html->link($this->Html->image("botoes/retornar.png", array("alt" => 
 <?php endforeach; ?>
 <br>
 <?php
-if (count($fechamento['Eventosanitario']) > 0 && count($fechamento['Eventoalimentacao']) > 0 ) {
+if (count($fechamento['Eventosanitario']) > 0 || count($fechamento['Eventoalimentacao']) > 0 ) {
     if (count($fechamento['Eventosanitario']) > 0) {
         ?>
         <strong> Eventos sanitários realizados: </strong>
@@ -53,10 +54,6 @@ if (count($fechamento['Eventosanitario']) > 0 && count($fechamento['Eventoalimen
     echo "<b>Não foram realizados eventos extras no período</b>";
 }
 ?>
-<br>
-<strong> Observação: </strong>
-<?php echo $fechamento['Fechamento']['observacao']; ?>
-<br><br>
 <strong> Valor de desconto: </strong>
 <?php echo $fechamento['Fechamento']['valordesconto']; ?>
 <br><br>

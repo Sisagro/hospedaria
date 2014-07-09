@@ -306,7 +306,14 @@ class Animai extends AppModel {
                 'foreignKey'            => 'animai_id',
                 'associationForeignKey' => 'tiposervico_id',
                 'order'                 => 'Tiposervico.descricao',
-            )
+            ),
+        'Eventosanitario' => array(
+            'className'             => 'Eventosanitario',
+            'joinTable'             => 'animaleventos',
+            'foreignKey'            => 'animai_id',
+            'associationForeignKey' => 'eventosanitario_id',
+            'dependent'             => true,
+        ),
     );
     
     

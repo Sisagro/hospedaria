@@ -91,14 +91,13 @@ class Eventosanitario extends AppModel {
      * hasAndBelongsToMany associations
      */
     public $hasAndBelongsToMany = array(
-        'Animai' =>
-            array(
-                'className'             => 'Animai',
-                'joinTable'             => 'animaleventos',
-                'foreignKey'            => 'eventosanitario_id',
-                'associationForeignKey' => 'animai_id',
-                'dependent'             => false,
-            )
+        'Animai' => array(
+            'className'             => 'Animai',
+            'joinTable'             => 'animaleventos',
+            'foreignKey'            => 'eventosanitario_id',
+            'associationForeignKey' => 'animai_id',
+            'dependent'             => true,
+        ),
     );
     
     // VALIDAÇÕES
